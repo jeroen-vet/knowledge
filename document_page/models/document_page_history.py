@@ -31,8 +31,9 @@ class DocumentPageHistory(models.Model):
     _order = 'id DESC'
 
     page_id = fields.Many2one('document.page', 'Page', ondelete='cascade')
-    summary = fields.Char('Summary', index=True)
-    content = fields.Text("Content")
+    name = fields.Char(index=True)
+    summary = fields.Char(index=True)
+    content = fields.Text()
     diff = fields.Text(compute='_compute_diff')
     #att_ids = fields.Many2many('document.page.att', string="Attachments")     
     att_ids = fields.Many2many('ir.attachment', string="Attachments") # this allows more than one history page to refer to same attachment (simple
@@ -40,7 +41,6 @@ class DocumentPageHistory(models.Model):
                                                                       # still appear as attachment to the page itself from ir_attachment point of view
 
     @api.multi
-    @api.depends('content', 'page_id.history_ids')
     def _compute_diff(self):
         """Shows a diff between this version and the previous version"""
         history = self.env['document.page.history']
