@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
+import pdb
 
 
 class DocumentPage(models.Model):
@@ -47,6 +48,19 @@ class DocumentPage(models.Model):
         help='Describe the changes made',
         compute=lambda x: x,
         inverse=lambda x: x,
+    )
+    
+    # To make sure only one history record is created can probably be done more elegantly
+    history_created = fields.Boolean(
+        compute=lambda x: False,
+        inverse=lambda x: x,
+    )    
+    
+    att_ids = fields.Many2many(
+        'ir.attachment',
+        "Attachments",
+        compute='_compute_content',
+        inverse='_inverse_content',
     )
 
     template = fields.Html(
@@ -100,6 +114,14 @@ class DocumentPage(models.Model):
         index=True,
         readonly=True,
     )
+    
+
+    
+    @api.model
+    def create(self, values):
+        values['res_id']=values['task_id']
+        values['res_model']='project.task'
+        return super(TaskReport, self).create(values)
 
     @api.multi
     def _get_page_index(self, link=True):
@@ -132,6 +154,7 @@ class DocumentPage(models.Model):
             else:
                 if rec.history_head:
                     rec.content = rec.history_head.content
+                    rec.att_ids = rec.history_head.att_ids
                 else:
                     # html widget's default, so it doesn't trigger ghost save
                     rec.content = '<p><br></p>'
@@ -139,11 +162,13 @@ class DocumentPage(models.Model):
     @api.multi
     def _inverse_content(self):
         for rec in self:
-            if rec.type == 'content':
+            if rec.type == 'content' and not rec.history_created:
                 rec._create_history({
                     'content': rec.content,
                     'summary': rec.summary,
+                    'att_ids': [(6,False,[r.id for r in rec.att_ids])],
                 })
+                rec.history_created=True
 
     @api.multi
     def _search_content(self, operator, value):

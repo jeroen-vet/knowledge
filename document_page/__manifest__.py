@@ -30,6 +30,7 @@
         'views/document_page_history.xml',
         'views/document_page_assets.xml',
         'views/report_document_page.xml',
+        'views/templates.xml',
         'security/document_page_security.xml',
         'security/ir.model.access.csv',
     ],
