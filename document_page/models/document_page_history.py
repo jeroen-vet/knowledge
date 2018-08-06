@@ -30,6 +30,7 @@ class DocumentPageHistory(models.Model):
     _description = "Document Page History"
     _order = 'id DESC'
 
+    company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env['res.company']._company_default_get('document.page.history'))
     page_id = fields.Many2one('document.page', 'Page', ondelete='cascade')
     name = fields.Char(index=True)
     summary = fields.Char(index=True)

@@ -15,6 +15,8 @@ class DocumentPage(models.Model):
     _order = 'name'
 
     name = fields.Char('Title', required=True)
+    
+    company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env['res.company']._company_default_get('document.page'))
 
     type = fields.Selection(
         [('content', 'Content'), ('category', 'Category')],

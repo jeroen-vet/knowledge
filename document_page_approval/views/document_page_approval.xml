@@ -88,6 +88,7 @@
                 <tree>
                     <field name="id"/>
                     <field name="approved_date"/>
+                    <field name="name" />
                     <field name="summary"/>
                     <field name="create_uid"/>
                     <field name="approved_uid"/>

@@ -24,8 +24,8 @@ from openerp.osv import fields, orm
 
 class document_page_history(orm.Model):
     _inherit = 'document.page.history'
-    _columns = {
-        'company_id': fields.many2one('res.company', 'Company')
+
+    company_id': fields.many2one('res.company', 'Company')
     }
 
     _defaults = {
