@@ -126,14 +126,6 @@ class DocumentPage(models.Model):
         readonly=True,
     )
     
-
-    
-    @api.model
-    def create(self, values):
-        values['res_id']=values['task_id']
-        values['res_model']='project.task'
-        return super(TaskReport, self).create(values)
-
     @api.multi
     def _get_page_index(self, link=True):
         """Return the index of a document."""
