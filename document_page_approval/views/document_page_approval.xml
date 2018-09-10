@@ -68,14 +68,11 @@
                 <field name="has_changes_pending_approval" invisible="1"/>
             </sheet>
 
-            <field name="type" position="before">
-                <div class="oe_button_box" name="button_box">
+            <div name="button_box" position="inside">
                     <button class="oe_stat_button" name="action_changes_pending_approval"
                             string="Change Requests" type="object"
                             attrs="{'invisible':[('has_changes_pending_approval','=',False)]}" icon="fa-edit"/>
-                </div>
-            </field>
-
+            </div>
             <field name="content_uid" position="after">
                 <field name="approved_uid"/>
             </field>

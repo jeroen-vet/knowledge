@@ -137,8 +137,10 @@ class DocumentPage(models.Model):
             index += ["<li>" + subpage._get_page_index() + "</li>"]
         r = ''
         if link:
-            r = '<a href="#id=%s">%s</a>' % (self.id, self.name)
-
+            if self.type=='content':
+                r = '<a href="/web?#id=%s&view_type=form&model=document.page&action=%s">%s</a>' % (self.id, self.env.ref('document_page.action_page').id,self.name)
+            else:
+                r = '<a href="/web?#id=%s&view_type=form&model=document.page&action=%s">%s</a>' % (self.id, self.env.ref('document_page.action_category').id,self.name)
         if index:
             r += "<ul>" + "".join(index) + "</ul>"
         return r
