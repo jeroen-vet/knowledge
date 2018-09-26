@@ -71,7 +71,7 @@ class DocumentPageHistory(models.Model):
         line1 = text1.splitlines(1)
         line2 = text2.splitlines(1)
         # get differences in attachments
-        v1atts= v1 and self.browse(v1).att_ids or self.browse(v2).att_ids & self.browse(v2).att_ids # get empty record set in case v1 is false 
+        v1atts= v1 and self.browse(v1).att_ids or self.env['ir.attachment'].browse() # get empty record set in case v1 is false 
         v2atts= v2 and self.browse(v2).att_ids # v2 should never be empty
         if line1 == line2 and v1atts==v2atts:
             return _('There are no changes in revisions.')

@@ -6,7 +6,7 @@
         <field name="name">document.page.history.tree</field>
         <field name="model">document.page.history</field>
         <field name="arch" type="xml">
-            <tree string="Document History">
+            <tree string="Document History" create="false">
                 <field name="id"/>
                 <field name="page_id"/>
                 <field name="company_id" groups="base.group_multi_company"/>                
@@ -39,7 +39,7 @@
         <field name="name">document.page.history.form</field>
         <field name="model">document.page.history</field>
         <field name="arch" type="xml">
-            <form string="Document Page History">
+            <form string="Document Page History" create="false">
                 <sheet>
                     <h1><field name="page_id" readonly="1"/></h1>
                     <group>
@@ -58,6 +58,23 @@
                         <page name="content" string="Content">
                             <field name="content" widget="html" placeholder="e.g. Once upon a time..." options="{'safe': True}"/>
                         </page>
+                        <page name="attachments" string="Attachments">
+                            <field name="att_ids" >
+                                <form string="Attachments">
+                                    <group string="Data">       
+                                        <field name="name" string="Name"/>
+                                        <field name="description" />
+                                        <field name="datas" filename="datas_fname" />
+                                        <field name="datas_fname" invisible="1" class="oe_inline oe_right"/> 
+                                    </group>
+                                </form>                                
+                                <tree string="Attachments" >
+                                    <field name="datas_fname" />
+                                    <field name="name" string="Name"/>                                
+                                    <field name="description" />
+                                </tree>
+                            </field>    
+                        </page>                         
                         <page name="diff" string="Changes">
                             <field name="diff" widget="html" style="overflow-x: scroll" />
                         </page>
