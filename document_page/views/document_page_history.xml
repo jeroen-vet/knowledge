@@ -56,7 +56,7 @@
                     </group>
                     <notebook>
                         <page name="content" string="Content">
-                            <field name="content" widget="html" placeholder="e.g. Once upon a time..." options="{'safe': True}"/>
+                            <field name="content" widget="html" placeholder="e.g. Once upon a time..." options="{'safe': True, 'codeview_on': True}"/>
                         </page>
                         <page name="attachments" string="Attachments">
                             <field name="att_ids" >

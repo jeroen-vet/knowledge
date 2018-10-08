@@ -6,6 +6,8 @@
         <xpath expr="." position="inside">
             <script type="text/javascript"
                     src="/document_page/static/src/js/remove_attach_button.js"/>
+            <script type="text/javascript"
+                    src="/document_page/static/src/js/codeview_option.js"/>
         </xpath>
     </template>
 

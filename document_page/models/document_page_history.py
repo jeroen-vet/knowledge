@@ -41,6 +41,7 @@ class DocumentPageHistory(models.Model):
                                                                       # solution without intermediate model. This would mean that all attachments 
                                                                       # still appear as attachment to the page itself from ir_attachment point of view
 
+
     @api.multi
     def _compute_diff(self):
         """Shows a diff between this version and the previous version"""

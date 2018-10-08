@@ -67,6 +67,23 @@ class DocumentPageApproval(models.Model):
         string='Has changes pending approval'
     )
 
+    has_draft_changes = fields.Boolean(
+    compute='_compute_has_draft_changes',
+    string='Has draft changes'
+    )
+    
+    
+    @api.multi
+    def _compute_has_draft_changes(self):
+        history = self.env['document.page.history']
+        for rec in self:
+            changes = history.search_count([
+                ('page_id', '=', rec.id),
+                ('state', '=', 'draft')])
+            rec.has_draft_changes = (changes > 0)       
+
+
+
     @api.multi
     @api.depends('approval_required', 'parent_id.is_approval_required')
     def _compute_is_approval_required(self):

@@ -65,7 +65,7 @@
                             </group>
                             <div>
                                 <label for="content" class="oe_edit_only"/>
-                                <field name="content" widget="html" placeholder="e.g. Once upon a time..." required="1" options="{'safe': True}"/>
+                                <field name="content" widget="html" placeholder="e.g. Once upon a time..." required="1" options="{'safe': True, 'codeview_on':True}"/>
                             </div>
                         </page>
                         <page name="attachments" string="Attachments">
@@ -114,7 +114,7 @@
             <form string="Document Page">
                 <field name="type" invisible="1"/>
                 <h1><field name="name" placeholder="Name"/></h1>
-                <field name="content" class="oe_view_only" required="1" options='{"safe": True}'/>
+                <field name="content" class="oe_view_only" required="1" options='{"safe": True, "codeview_on": True}'/>
             </form>
         </field>
     </record>

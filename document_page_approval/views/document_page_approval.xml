@@ -36,9 +36,21 @@
                     <field name="approved_date" readonly="1" attrs="{'invisible':[('state','not in',['approved'])]}"/>
                 </group>
             </xpath>
-            <field name="content" position="attributes">
+            <field name="name" position="attributes">
                 <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
             </field>
+            <field name="summary" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </field>
+            <field name="content" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </field>                       
+            <field name="company_id" position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </field>  
+            <field name="att_ids"  position="attributes">
+                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+            </field>  
             <sheet position="after">
                 <div class="oe_chatter">
                     <field name="message_follower_ids" widget="mail_followers"/>
@@ -56,6 +68,13 @@
         <field name="arch" type="xml">
 
             <sheet position="before">
+                <!-- add warning if has pending draft edits -->
+                <div class="alert alert-danger" role="alert" style="margin-bottom:0px;"
+                     attrs="{'invisible': [('has_draft_changes','=',False)]}">
+                    This document has <b>Changes in Draft state</b> not yet submitted for approval. You are viewing the last approved content.
+                </div>    
+                <field name="has_draft_changes" invisible="1"/>
+                <field name="am_i_approver" invisible="1" />    
                 <div class="alert alert-info" role="alert" style="margin-bottom:0px;"
                      attrs="{'invisible': [('has_changes_pending_approval','=',False)]}">
                     This document has <b>Changes Pending Approval</b>. You are viewing the last approved content.
@@ -68,10 +87,12 @@
                 <field name="has_changes_pending_approval" invisible="1"/>
             </sheet>
 
+
+
             <div name="button_box" position="inside">
                     <button class="oe_stat_button" name="action_changes_pending_approval"
                             string="Change Requests" type="object"
-                            attrs="{'invisible':[('has_changes_pending_approval','=',False)]}" icon="fa-edit"/>
+                            attrs="{'invisible':[('has_changes_pending_approval','=',False),('has_draft_changes','=',False)]}" icon="fa-edit"/>
             </div>
             <field name="content_uid" position="after">
                 <field name="approved_uid"/>
@@ -110,7 +131,7 @@
         </field>
     </record>
 
-    <!-- Catgory Form View -->
+    <!-- Category Form View -->
     <record id="view_category_form_inherit" model="ir.ui.view">
         <field name="name">document.page.category.form</field>
         <field name="model">document.page</field>

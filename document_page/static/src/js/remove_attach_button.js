@@ -11,6 +11,7 @@ Sidebar.include({
     init : function(){
         this._super.apply(this, arguments);
         var view = this.getParent();
+        // attachment button both removed from document.page as from document.page.history
         if (view.fields_view && view.fields_view.type === "form" && window.location.href.indexOf('&model=document.page') > -1) {
             var i = this.sections.findIndex(function(x){ return x.name==='files';});
             this.sections.splice(i, 1,);
