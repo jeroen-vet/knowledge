@@ -40,15 +40,21 @@ class DocumentPageHistoryWorkflow(models.Model):
     am_i_owner = fields.Boolean(
         compute='_compute_am_i_owner'
     )
-
+ 
+    # JV:This code, for mysterious reasons, does not work so well 
+    #~ am_i_approver = fields.Boolean(
+    #   related='page_id.am_i_approver'
+    #~ )
+    
     am_i_approver = fields.Boolean(
-        related='page_id.am_i_approver'
-    )
+        compute='_compute_am_i_approver'
+    )    
 
     page_url = fields.Text(
         compute='_compute_page_url',
         string="URL",
     )
+    
 
     @api.multi
     def page_approval_draft(self):
@@ -116,7 +122,13 @@ class DocumentPageHistoryWorkflow(models.Model):
         """Check if current user is the owner"""
         for rec in self:
             rec.am_i_owner = (rec.create_uid == self.env.user)
-
+            
+    @api.multi
+    def _compute_am_i_approver(self):
+        """Check if current user can approve"""
+        for rec in self:
+            rec.am_i_approver = rec.page_id.can_user_approve_this_page(self.env.user)                    
+          
     @api.multi
     def _compute_page_url(self):
         """Compute the page url."""

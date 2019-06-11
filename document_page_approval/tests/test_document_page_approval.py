@@ -2,6 +2,7 @@
 from odoo.tests import common
 
 
+
 class TestDocumentPageApproval(common.TransactionCase):
 
     def setUp(self):
@@ -26,11 +27,14 @@ class TestDocumentPageApproval(common.TransactionCase):
             'content': 'This content will require approval'
         })
 
+
+
     def test_approval_required(self):
         page = self.page2
         self.assertTrue(page.is_approval_required)
         self.assertTrue(page.has_changes_pending_approval)
         self.assertEqual(len(page.history_ids), 0)
+
 
     def test_change_request_approve(self):
         page = self.page2
@@ -62,11 +66,13 @@ class TestDocumentPageApproval(common.TransactionCase):
         chreq.signal_workflow('page_approval_approve')
         self.assertEqual(page.content, 'New content')
 
+
     def test_change_request_auto_approve(self):
         page = self.page1
         self.assertFalse(page.is_approval_required)
         page.write({'content': 'New content'})
         self.assertEqual(page.content, 'New content')
+
 
     def test_change_request_from_scratch(self):
         page = self.page2
@@ -117,6 +123,7 @@ class TestDocumentPageApproval(common.TransactionCase):
         """Get approver guids."""
         page = self.page2
         self.assertTrue(len(page.approver_group_ids) > 0)
+
 
     def test_get_page_url(self):
         """Test if page url exist."""

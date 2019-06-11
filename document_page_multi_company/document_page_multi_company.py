@@ -19,29 +19,20 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from odoo import fields, models
 
 
-class document_page_history(orm.Model):
+class DocumentPageHistory(models.Model):
     _inherit = 'document.page.history'
-
-    company_id': fields.many2one('res.company', 'Company')
-    }
-
-    _defaults = {
-        'company_id': lambda self, cr, uid, c: self.pool.get('res.company')
-        ._company_default_get(cr, uid, 'document_page_history', context=c)
-    }
+    
+    
+    company_id = fields.Many2one('res.company', string='Company',
+                                 default=lambda self: self.env['res.company']._company_default_get('document.page.history'))    
 
 
-class document_page(orm.Model):
+class DocumentPage(models.Model):
     _inherit = 'document.page'
-    _columns = {
-        'company_id': fields.many2one('res.company', 'Company')
-    }
-
-    _defaults = {
-        'company_id': lambda self, cr, uid, c: self.pool.get('res.company')
-        ._company_default_get(cr, uid, 'document_page', context=c)
-    }
-
+    
+    
+    company_id = fields.Many2one('res.company', string='Company',
+                                 default=lambda self: self.env['res.company']._company_default_get('document.page'))  

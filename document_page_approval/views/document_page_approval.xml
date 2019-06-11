@@ -24,16 +24,21 @@
                     <!-- reopen if i am owner or approver -->
                     <button name="page_approval_reopen" string="Back to draft"
                             attrs="{'invisible':['|','&amp;',('am_i_owner','=',False),('am_i_approver','=',False),('state','not in',['cancelled'])]}"/>
-                    <field name="am_i_owner" invisible="1"/>
-                    <field name="am_i_approver" invisible="1"/>
-                    <field name="is_approval_required" invisible="1"/>
+
                     <field name="state" widget="statusbar" statusbar_visible="draft,approved" />
                 </header>
             </sheet>
-            <xpath expr="//field[@name='create_uid']/parent::group" position="after">
+            <xpath expr="//label[@for='company_id']" position="replace"/>
+            <!--<xpath expr="//field[@name='create_uid']/parent::group" position="after">-->
+            <xpath expr="//form/sheet/h1" position="before">
+                    <field name="am_i_owner" invisible="1"/> 
+                    <field name="am_i_approver" invisible="1"/>
+                    <field name="is_approval_required" invisible="1"/>
+            </xpath>
+            <xpath expr="/form/sheet/group/group" position="after">
                 <group>
-                    <field name="approved_uid" readonly="1" attrs="{'invisible':[('state','not in',['approved'])]}"/>
-                    <field name="approved_date" readonly="1" attrs="{'invisible':[('state','not in',['approved'])]}"/>
+                    <field name="approved_uid" readonly="1" />
+                    <field name="approved_date" readonly="1" />
                 </group>
             </xpath>
             <field name="name" position="attributes">
@@ -46,7 +51,7 @@
                 <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
             </field>                       
             <field name="company_id" position="attributes">
-                <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
+                <attribute name="readonly">1</attribute>
             </field>  
             <field name="att_ids"  position="attributes">
                 <attribute name="attrs">{'readonly': [('state', 'not in', ['draft'])]}</attribute>
